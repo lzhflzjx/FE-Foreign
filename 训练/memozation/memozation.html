@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    /**
+ * @param {Function} func
+ * @param {(args:[]) => string }  [resolver] - cache key generator
+ */
+// 该函数接受两个参数：要记忆化的函数func和用于生成缓存键的解析器resolver
+function memo(func, resolver = (...args) => args.join("_")) {
+    console.log('resolver', resolver)
+    const cache = new Map(); // 创建了一个Map对象cache用于存储函数的结果。
+  
+    return function (...args) {
+      // 返回一个闭包函数，该函数接受任意数量的参数。
+      const cacheKey = resolver(...args); //使用传入的resolver函数生成参数args的缓存键cacheKey。
+      console.log('cacheKey', cacheKey)
+      // 判断缓存中是否已经存在相同的cacheKey，
+      if (cache.has(cacheKey)) {
+        // 如果存在则直接返回对应的值。
+        return cache.get(cacheKey);
+      }
+      // 调用传入的函数func，传入参数args，并将结果存储在value中。
+      const value = func.call(this, ...args);
+      //将计算得到的值存储在缓存cache中，以备后续使用。
+      cache.set(cacheKey, value);
+      // 返回计算得到的值。
+      return value;
+    };
+  }
+  
+  const func = (arg1, arg2) => {
+    return arg1 + arg2;
+  };
+  
+  const memoed = memo(func, () => "samekey");
+  
+  memoed(1, 2);
+  // 3, func is called, 3 is cached with key 'samekey'
+  
+  memoed(1, 2);
+  // 3, since key is the same, 3 is returned without calling func
+  
+  memoed(1, 3);
+  // 3, since key is the same, 3 is returned without calling func
+</script>
+</html>

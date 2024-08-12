@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>最小年龄: <input type="number" id="ageToCheck" value="18"></p>
+    <button onclick="myFunction()">点我</button>
+    <p>是否所有年龄都符号条件? <span id="demo"></span></p>
+    <script>var ages = [32, 33,
+            12, 40]; function
+            checkAdult(age) {
+                return age >=
+                    document.getElementById("ageToCheck").value;
+        } function myFunction() {
+            document.getElementById("demo").innerHTML = ages.every(checkAdult);
+        }
+    </script>
+</body>
+
+</html>

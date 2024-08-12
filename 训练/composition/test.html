@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    const times = (y) => (x) => {
+        console.log('x * y', x * y)
+        return x * y
+    }
+    const plus = (y) => (x) => x + y
+    const subtract = (y) => (x) => x - y
+    const divide = (y) => (x) => x / y
+
+    console.log('times', times(233)(2))
+    pipe([
+        times(2),
+        times(3),
+        times(4)
+    ])(2)
+    // // x * 2 * 3 * 4
+
+    // pipe([
+    //     times(2),
+    //     plus(3),
+    //     times(4)
+    // ])
+    // (x * 2 + 3) * 4
+    // pipe([
+    //     times(2),
+    //     subtract(3),
+    //     divide(4)
+    // ])
+
+    // function pipe(funcs) {
+    //     console.log('funcs', funcs)
+    //     return function (arg) {
+    //         // console.log('arg', arg)
+    //         return funcs.reduce((result, func) => {
+    //             return func.call(this, result)
+    //         }, arg)
+    //     }
+    // }
+
+    function pipe(funcs) {
+  return function(arg) {
+     return funcs.reduce((result, func) => {
+        console.log('result', result)
+       return func.call(this, result)
+     }, arg)
+  }
+}
+
+</script>
+
+</html>

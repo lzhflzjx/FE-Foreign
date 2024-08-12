@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+
+class Timer {
+    constructor(fn, interval) {
+        this.interval = interval
+        this.fn = fn
+        this.lastTime = 0
+
+        this.loop(0)
+    }
+    loop(timestamp) {
+        console.log('Timer.prototype.loop.bind(this)', Timer.prototype.loop.bind(this))
+        this.timer = requestAnimationFrame(Timer.prototype.loop.bind(this))
+        if (timestamp - this.lastTime > this.interval) {
+            this.lastTime = timestamp;
+            typeof this.fn == "function" && this.fn()
+        }
+    }
+    clear() {
+        cancelAnimationFrame(this.timer)
+        this.timer = null
+    }
+}
+// 调用
+let t = new Timer(() => {
+    console.log("timer 1s到了")
+}, 1000)
+</script>
+</html>

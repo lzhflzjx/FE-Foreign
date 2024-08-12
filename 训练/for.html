@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+    function idleCallback(deadline) {
+        let taskFinished = false
+        while (deadline.timeRemaining() > 0) {
+            setTimeout(() => {
+                taskFinished = true
+            }, 1000);
+            // 在空闲时间内执行任务或循环
+            console.log("Executing idle task...");
+        }
+        console.log('taskFinished', taskFinished)
+        if (!taskFinished) {
+            // 如果任务未完成，请求下一个空闲时段执行
+            window.requestIdleCallback(idleCallback);
+        }
+    }
+
+    // 向浏览器请求一个空闲时段并执行任务
+    window.requestIdleCallback(idleCallback);
+</script>
+
+</html>

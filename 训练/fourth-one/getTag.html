@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Example Document</title>
+</head>
+
+<body>
+    <div id="main">
+        <header>
+            <h1>Welcome</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <section>
+            <article>
+                <h2>Article Title</h2>
+                <p>This is a paragraph.</p>
+            </article>
+        </section>
+        <footer>
+            <p>Footer content</p>
+        </footer>
+    </div>
+</body>
+<script>
+
+    /**
+     * @param {HTMLElement} tree
+     * @return {string[]}
+     */
+    function getTags(node, res = new Set()) {
+        res.add(node.tagName.toLowerCase())
+        for (let n of node.children) {
+            getTags(n, res)
+        }
+        return [...res]
+    }
+
+    // 获取整个文档的根元素
+    const rootElement = document.documentElement;
+
+    // 调用 getTags 函数，并传入根元素
+    const tags = getTags(rootElement);
+
+    // 输出获取到的标签数组
+    console.log(tags);
+
+</script>
+
+</html>

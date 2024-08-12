@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    const h = createElement
+
+    render(h(
+        'div',
+        {},
+        h('h1', {}, ' this is '),
+        h(
+            'p',
+            { className: 'paragraph' },
+            ' a ',
+            h('button', {}, ' button '),
+            ' from ',
+            h('a',
+                { href: 'https://bfe.dev' },
+                h('b', {}, 'BFE'),
+                '.dev')
+        )
+    ))
+    /**
+     * MyElement is the type your implementation supports
+     *
+     * type MyNode = MyElement | string
+     */
+
+    /**
+     * @param { string } type - valid HTML tag name
+     * @param { object } [props] - properties.
+     * @param { ...MyNode} [children] - elements as rest arguments
+     * @return { MyElement }
+     */
+    function createElement(type, props, ...children) {
+        return {
+            type,
+            props: {
+                ...props,
+                children
+            }
+        }
+    }
+
+
+    /**
+     * @param { MyElement }
+     * @returns { HTMLElement } 
+     */
+    function render(myElement) {
+        if (typeof myElement === 'string') {
+            return document.createTextNode(myElement)
+        }
+        let {
+            type,
+            props: {
+                children,
+                ...attrs
+            } } = myElement
+
+
+        const el = document.createElement(type)
+console.log('Object.entries(attrs)', Object.entries(attrs))
+        for (let [key, value] of Object.entries(attrs)) {
+            console.log('key', key)
+            console.log('value', value)
+            el[key] = value
+        }
+
+        let chidArr;
+        if (Array.isArray(children)) {
+            chidArr = children
+        } else {
+            chidArr = [children]
+        }
+
+        for (let child of chidArr) {
+            el.append(render(child))
+        }
+
+        return el
+    }
+
+</script>
+
+</html>

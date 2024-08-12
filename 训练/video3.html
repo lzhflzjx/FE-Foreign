@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    const nums = [2, 7, 11, 15];
+    const target = 9;
+    function solution(nums, target) {
+        let map = new Map();
+        for (let i = 0; i < nums.length; i++) {
+            let compliment = target - nums[i];
+            if (map.has(compliment)) {
+                return [i, map.get(compliment)];
+            } else {
+                map.set(nums[i], i);
+            }
+
+        }
+    }
+    console.log(solution(nums, target));
+</script>
+
+</html>
